@@ -2,5 +2,11 @@ venv/
 .venv/
 __pycache__/
 *.pyc
+
+# Ignore all CSV files in data folders
 data/raw/*.csv
-data/processed/
+data/processed/*.csv
+
+# BUT do NOT ignore the .dvc map files
+!data/**/*.dvc
+!data/**/.gitignore
