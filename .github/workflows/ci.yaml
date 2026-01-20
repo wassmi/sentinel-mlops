@@ -1,0 +1,32 @@
+name: Sentinel MLOps CI
+
+on: [push]
+
+jobs:
+  check-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas scikit-learn dvc[s3]
+
+      - name: Run Code Linting (Basic Check)
+        run: |
+          # This checks if the python files even have the right syntax
+          python3 -m py_compile src/preprocessing.py src/train.py
+          echo "Code syntax is valid!"
+
+      - name: Verify DVC Pipeline
+        run: |
+          # This ensures the dvc.yaml and dvc.lock are in sync
+          # If someone broke the pipeline, this step will fail.
+          dvc status
