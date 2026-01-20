@@ -1,0 +1,34 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python3 src/preprocessing.py
+    deps:
+    - path: data/raw/transactions.csv
+      hash: md5
+      md5: a1eaa49e4448d7a777bc3e940322d5de
+      size: 20368
+    - path: src/preprocessing.py
+      hash: md5
+      md5: 571e84a1da317fcc54903a02dda81db3
+      size: 884
+    outs:
+    - path: data/processed/cleaned_transactions.csv
+      hash: md5
+      md5: a1eaa49e4448d7a777bc3e940322d5de
+      size: 20368
+  train:
+    cmd: python3 src/train.py
+    deps:
+    - path: data/processed/cleaned_transactions.csv
+      hash: md5
+      md5: a1eaa49e4448d7a777bc3e940322d5de
+      size: 20368
+    - path: src/train.py
+      hash: md5
+      md5: e738f88c8b23557e27fa4d21d81d185c
+      size: 747
+    outs:
+    - path: models/fraud_model.pkl
+      hash: md5
+      md5: fd5c9fa34d64d0fa5607126d79cc072f
+      size: 55238
